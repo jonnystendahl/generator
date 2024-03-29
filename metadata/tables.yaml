@@ -1,15 +1,20 @@
 tables:
-  - name: table1
-    dataset: dataset1
+  - name: sales_win_f
+    dataset: hadoop_out
     columns:
       - name: column1
         type: STRING
+        description: Customer name
       - name: column2
-        type: INTEGER
+        type: INT64
+        description: Customer sales
     partition_column: date
-    
-  - name: table2
-    dataset: dataset2
+    cluster_columns:
+      - column1
+      - column2
+
+  - name: product_d
+    dataset: hadoop_out
     columns:
       - name: column1
         type: TIMESTAMP
