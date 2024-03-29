@@ -1,0 +1,20 @@
+tables:
+  - name: table1
+    dataset: dataset1
+    columns:
+      - name: column1
+        type: STRING
+      - name: column2
+        type: INTEGER
+    partition_column: date
+    
+  - name: table2
+    dataset: dataset2
+    columns:
+      - name: column1
+        type: TIMESTAMP
+      - name: column2
+        type: FLOAT
+    cluster_columns:
+      - column1
+      - column2
