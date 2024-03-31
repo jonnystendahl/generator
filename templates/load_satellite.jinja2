@@ -1,28 +1,38 @@
-MERGE INTO {{ hub.name }} AS t
+MERGE INTO {{ sat.name }} AS t
 USING (
-  {% for source in hub.sources %}
-  SELECT '{{ source.table }}' AS source_table,
-         {% for key, value in source.column_mappings.items() %}
-         {{ key }} AS {{ value }}{% if not loop.last %},{% endif %}
-         {% endfor %}
+  {% for source in sat.sources %}
+    SELECT 
+            {% for key, value in source.column_mappings.items() %}
+            {{ key }} AS {{ value }},
+            {% endfor %}
+            {{ source.effective_ts }} AS effective_ts
     FROM `{{ source.table }}`
-   WHERE {{ source.filter }}
-   UNION ALL
-  {% endfor %}
+    WHERE {{ source.filter }}
+    {% if not loop.last %}
+    UNION ALL
+    {% endif %}
+    {% endfor %}
 ) AS s
-ON {% for key in hub.business_key %}t.{{ key }} = s.{{ key }} {% if not loop.last %} AND {% endif %}{% endfor %}
+ON {% for key in sat.business_key %}
+    {% if not loop.first %}AND {% endif %}t.{{ key }} = s.{{ key }}
+    {% endfor %}
 WHEN MATCHED THEN
-  UPDATE SET 
-  {% for key, value in hub.column_mappings.items() %}
+  UPDATE SET
+  {# Header to use in other templates
+  {% for key, value in sat.column_mappings.items() %}
     t.{{ value }} = s.{{ key }}{% if not loop.last %},{% endif %}
   {% endfor %},
+  #}
   lddts = CURRENT_DATETIME()
 WHEN NOT MATCHED BY TARGET THEN
-  INSERT ({% for value in hub.column_mappings.values() %}{{ value }}{% if not loop.last %}, {% endif %}{% endfor %}, lddts)
+  INSERT (
+  {#
+  {% for value in sat.column_mappings.values() %}{{ value }}{% if not loop.last %}, {% endif %}{% endfor %}, lddts)
   VALUES (
-  {% for key, value in hub.column_mappings.items() %}
+  {% for key, value in sat.column_mappings.items() %}
     s.{{ key }}{% if not loop.last %}, {% endif %}
   {% endfor %},
+  #}
   CURRENT_DATETIME())
 WHEN NOT MATCHED BY SOURCE THEN
   DELETE

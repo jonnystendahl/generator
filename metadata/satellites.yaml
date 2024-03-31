@@ -3,23 +3,23 @@ satellites:
     folder: dw
     subfolder: customer
     dataset: dw
+    business_key: [column1, column2, column3, column4]
     sources:
       - table: source_table1
-        business_key: [column1, column2]
         filter: "column3 = 'some_value'"
-        effective_ts_column: effective_ts1
+        effective_ts: effective_ts
         column_mappings:
           source_column1: target_column1
           source_column2: target_column2
           source_column3: target_column3
       - table: source_table2
         dataset: hadoop_out
-        business_key: [column3, column4]
         filter: "column5 ='xxxx'"
-        effective_ts_column: effective_ts2
+        effective_ts: effective_ts
         column_mappings:
-          source_column1: [target_column1, target_column2]
-          source_column2: target_column3
+          source_column11: target_column1
+          source_column12: target_column2
+          source_column13: target_column3
 
   - name: product_satellite
     folder: dw
@@ -29,7 +29,7 @@ satellites:
       - table: source_table1
         business_key: [column1, column2]
         filter: "column3 = 'some_value'"
-        effective_ts_column: effective_ts1
+        effective_ts: effective_ts
         column_mappings:
           source_column1: target_column1
           source_column2: target_column2
@@ -38,7 +38,7 @@ satellites:
         dataset: hadoop_out
         business_key: [column3, column4]
         filter: "column5 > 100"
-        effective_ts_column: effective_ts2
+        effective_ts: effective_ts
         column_mappings:
           source_column1: [target_column1, target_column2]
           source_column2: target_column3
