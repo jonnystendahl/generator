@@ -1,7 +1,7 @@
 tables:
   - name: customer_h
     folder: dw
-    subfolder: hubs
+    subfolder: customer
     dataset: hadoop_out
     columns:
       - name: column1
@@ -17,7 +17,7 @@ tables:
 
   - name: customer_main_s
     folder: dw
-    subfolder: sats
+    subfolder: customer
     dataset: hadoop_out
     columns:
       - name: column1
