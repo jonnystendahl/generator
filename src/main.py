@@ -2,6 +2,7 @@ import os
 import yaml
 from jinja2 import Environment, FileSystemLoader
 
+# Create then jinja environment as a global variable
 env = Environment(loader=FileSystemLoader('./templates'), trim_blocks=True, lstrip_blocks=True)
 
 def write_statement_to_files(folder, subfolder, filename, content):
@@ -20,7 +21,6 @@ def load_yaml(file_path):
     return data
 
 def generate_create_table_sql(tables):
-    # env = Environment(loader=FileSystemLoader('./templates'), trim_blocks=True, lstrip_blocks=True)
     template = env.get_template('create_table.jinja2')
     
     for table in tables:
