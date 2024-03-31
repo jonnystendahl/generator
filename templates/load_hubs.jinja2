@@ -2,7 +2,9 @@ MERGE INTO {{ hub.name }} AS t
 USING (
   {% for source in hub.sources %}
   SELECT '{{ source.table }}' AS source_table,
-         {{ ', '.join(source.business_key) }} AS business_key
+         {% for key, value in source.column_mappings.items() %}
+         {{ key }} AS {{ value }}{% if not loop.last %},{% endif %}
+         {% endfor %}
     FROM `{{ source.table }}`
    WHERE {{ source.filter }}
    UNION ALL
@@ -10,10 +12,18 @@ USING (
 ) AS s
 ON {% for key in hub.business_key %}t.{{ key }} = s.{{ key }} {% if not loop.last %} AND {% endif %}{% endfor %}
 WHEN MATCHED THEN
-  UPDATE SET {% for key in hub.business_key %}{{ key }} = s.{{ key }}, {% endfor %}load_datetime = CURRENT_DATETIME()
+  UPDATE SET 
+  {% for key, value in hub.column_mappings.items() %}
+    t.{{ value }} = s.{{ key }}{% if not loop.last %},{% endif %}
+  {% endfor %},
+  lddts = CURRENT_DATETIME()
 WHEN NOT MATCHED BY TARGET THEN
-  INSERT ({% for key in hub.business_key %}{{ key }}, {% endfor %}load_datetime)
-  VALUES ({% for key in hub.business_key %}s.{{ key }}, {% endfor %}CURRENT_DATETIME())
+  INSERT ({% for value in hub.column_mappings.values() %}{{ value }}{% if not loop.last %}, {% endif %}{% endfor %}, lddts)
+  VALUES (
+  {% for key, value in hub.column_mappings.items() %}
+    s.{{ key }}{% if not loop.last %}, {% endif %}
+  {% endfor %},
+  CURRENT_DATETIME())
 WHEN NOT MATCHED BY SOURCE THEN
   DELETE
 ;

@@ -30,6 +30,16 @@ def generate_create_table_sql(tables):
         create_table_ddl = template.render(table=table)
         write_statement_to_files(folder, subfolder, filename, create_table_ddl)
 
+def generate_hubs_sql(tables):
+    template = env.get_template('load_hubs.jinja2')
+    
+    for table in tables:
+        folder = table['folder']
+        subfolder = table['subfolder']
+        filename = "create_{}.sql".format(table['name'])
+        create_table_ddl = template.render(table=table)
+        write_statement_to_files(folder, subfolder, filename, create_table_ddl)
+
 if __name__ == "__main__":
     tables_yaml_path = "./metadata/tables.yaml"
 
