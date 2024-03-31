@@ -1,3 +1,5 @@
+{% include 'header.jinja2' +%}
+
 CREATE TABLE {{ table.dataset }}.{{ table.name }} (
     {% for column in table.columns %}
     {{ column.name }} {{ column.type }}{% if column.description %} OPTION(description='{{ column.description }}'){% endif %}{% if not loop.last %},

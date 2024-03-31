@@ -1,5 +1,7 @@
 tables:
-  - name: sales_win_f
+  - name: customer_h
+    folder: dw
+    subfolder: hubs
     dataset: hadoop_out
     columns:
       - name: column1
@@ -13,7 +15,9 @@ tables:
       - column1
       - column2
 
-  - name: product_d
+  - name: customer_main_s
+    folder: dw
+    subfolder: sats
     dataset: hadoop_out
     columns:
       - name: column1
