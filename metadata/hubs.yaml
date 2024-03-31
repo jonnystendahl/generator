@@ -1,0 +1,10 @@
+hubs:
+  - name: customer_hub
+    dataset: hadoop_out
+    sources:
+      - table: source_table1
+        business_key: [column1, column2]
+        filter: "column3 = 'some_value'"
+      - table: source_table2
+        business_key: [column3, column4]
+        filter: "column5 > 100"

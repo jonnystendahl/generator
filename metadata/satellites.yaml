@@ -1,0 +1,20 @@
+satellites:
+  - name: customer_satellite
+    dataset: hadoop_out
+    sources:
+      - table: source_table1
+        business_key: [column1, column2]
+        filter: "column3 = 'some_value'"
+        effective_ts_column: effective_ts1
+        column_mappings:
+          source_column1: target_column1
+          source_column2: target_column2
+          source_column3: target_column3
+      - table: source_table2
+        dataset: hadoop_out
+        business_key: [column3, column4]
+        filter: "column5 > 100"
+        effective_ts_column: effective_ts2
+        column_mappings:
+          source_column1: [target_column1, target_column2]
+          source_column2: target_column3

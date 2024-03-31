@@ -3,8 +3,8 @@
 -- AUTO GENERATED SCRIPT
 -- DO NOT EDIT!!
 --
+-- Table name: customer_h
 -- Dataset: hadoop_out
--- Table name: customer_h 
 --
 ---------------------------------------------------
 
