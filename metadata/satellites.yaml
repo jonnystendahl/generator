@@ -3,9 +3,10 @@ satellites:
     folder: dw
     subfolder: customer
     dataset: dw
-    business_key: [column1, column2, column3, column4]
+    business_key: [column1, column2]
     sources:
       - table: source_table1
+        dataset: dw
         filter: "column3 = 'some_value'"
         effective_ts: effective_ts
         column_mappings:
@@ -27,6 +28,7 @@ satellites:
     dataset: dw
     sources:
       - table: source_table1
+        dataset: dw
         business_key: [column1, column2]
         filter: "column3 = 'some_value'"
         effective_ts: effective_ts

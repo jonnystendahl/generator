@@ -1,4 +1,4 @@
-MERGE INTO {{ sat.name }} AS t
+MERGE INTO {{ sat.dataset }}.{{ sat.name }} AS t
 USING (
   {% for source in sat.sources %}
     SELECT 
@@ -6,7 +6,7 @@ USING (
             {{ key }} AS {{ value }},
             {% endfor %}
             {{ source.effective_ts }} AS effective_ts
-    FROM `{{ source.table }}`
+    FROM {{ source.dataset }}.{{ source.table }}
     WHERE {{ source.filter }}
     {% if not loop.last %}
     UNION ALL
