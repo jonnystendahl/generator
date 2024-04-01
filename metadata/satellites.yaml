@@ -1,5 +1,5 @@
 satellites:
-  - name: customer_satellite
+  - name: customer_s
     folder: dw
     subfolder: customer
     dataset: dw
@@ -22,7 +22,7 @@ satellites:
           source_column12: target_column2
           source_column13: target_column3
 
-  - name: product_satellite
+  - name: product_s
     folder: dw
     subfolder: product
     dataset: dw
