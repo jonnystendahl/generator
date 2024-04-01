@@ -21,7 +21,7 @@ def load_yaml(file_path):
     return data
 
 def generate_create_table_sql(tables):
-    template = env.get_template('create_table.jinja2')
+    template = env.get_template('create_table.sql.jinja2')
     
     for table in tables:
         folder = table['folder']
@@ -31,7 +31,7 @@ def generate_create_table_sql(tables):
         write_statement_to_files(folder, subfolder, filename, create_table_ddl)
 
 def generate_satellites_sql():
-    template = env.get_template('load_satellite.jinja2')
+    template = env.get_template('load_satellite.sql.jinja2')
     sats_yaml_path = "./metadata/satellites.yaml"
 
     sats_data = load_yaml(sats_yaml_path)
