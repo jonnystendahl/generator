@@ -4,16 +4,18 @@ tables:
     subfolder: customer
     dataset: dw
     columns:
-      - name: column1
-        type: STRING
-        description: Customer name
-      - name: column2
+      - name: customer_id
         type: INT64
-        description: Customer sales
-    partition_column: date
+        description: Customer id
+      - name: sales_sek
+        type: INT64
+        description: Sales in SEK
+      - name: dt
+        type: date
+        description: The date this record was created
+    partition_expression: dt
     cluster_columns:
-      - column1
-      - column2
+      - customer_id
 
   - name: customer_main_s
     folder: dw
